@@ -29,7 +29,7 @@ Browser open
 
 	go get github.com/slowfei/gosfcore
 
-	go get github.com/slowfei/leafveingo/template
+	go get github.com/slowfei/leafveingo
 	
     go get github.com/slowfei/gohtml
 
