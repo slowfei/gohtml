@@ -53,7 +53,10 @@ func HtmlOut(rw http.ResponseWriter, req *http.Request) {
 			return
 		}
 		rw.Header().Set("Content-Type", "text/html; charset="+*charset)
-		template.Execute(rw, LVTemplate.NewTemplateValue(reqPath, req.Form))
+		err := template.Execute(rw, LVTemplate.NewTemplateValue(reqPath, req.Form))
+		if nil != err {
+			fmt.Println("template error: ", err)
+		}
 	} else {
 		http.ServeFile(rw, req, filePath)
 	}
