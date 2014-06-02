@@ -3,7 +3,7 @@
 //	Software Source Code License Agreement (BSD License)
 //
 //  Create on 2013-11-30
-//  Update on 2014-05-27
+//  Update on 2014-06-01
 //  Email  slowfei@foxmail.com
 //  Home   http://www.slowfei.com
 
@@ -26,6 +26,8 @@ var (
 	suffix   = flag.String("s", "tpl", "request url suffix default tpl")
 	charset  = flag.String("c", "utf-8", "content-type charset default utf-8")
 	isCmdDir = flag.Bool("cmddir", true, "is current cmd directory find files? default true. false is execute file directory find.")
+	path     = flag.String("path", "", "specify the run path")
+	compact  = flag.Bool("compact", false, "is compact html code? default false")
 	template = LVTemplate.SharedTemplate()
 )
 
@@ -67,13 +69,20 @@ func HtmlOut(rw http.ResponseWriter, req *http.Request) {
 func main() {
 	flag.Parse()
 	http.HandleFunc("/", HtmlOut)
-	if *isCmdDir {
-		template.SetBaseDir(SFFileManager.GetCmdDir())
+
+	if 0 == len(*path) {
+		if *isCmdDir {
+			template.SetBaseDir(SFFileManager.GetCmdDir())
+		} else {
+			template.SetBaseDir(SFFileManager.GetExecDir())
+		}
 	} else {
-		template.SetBaseDir(SFFileManager.GetExecDir())
+		template.SetBaseDir(*path)
 	}
 
 	template.SetCache(false)
+	template.SetCompactHTML(*compact)
+
 	err := http.ListenAndServe(":"+strconv.Itoa(*port), nil)
 	if err != nil {
 		fmt.Println("ListenAndServe:", err)
