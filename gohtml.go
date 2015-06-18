@@ -3,7 +3,7 @@
 //	Software Source Code License Agreement (BSD License)
 //
 //  Create on 2013-11-30
-//  Update on 2014-06-01
+//  Update on 2015-06-18
 //  Email  slowfei@foxmail.com
 //  Home   http://www.slowfei.com
 
@@ -28,7 +28,7 @@ var (
 	isCmdDir = flag.Bool("cmddir", true, "is current cmd directory find files? default true. false is execute file directory find.")
 	path     = flag.String("path", "", "specify the run path")
 	compact  = flag.Bool("compact", false, "is compact html code? default false")
-	template = LVTemplate.SharedTemplate()
+	template = LVTemplate.NewTemplate()
 )
 
 func HtmlOut(rw http.ResponseWriter, req *http.Request) {
